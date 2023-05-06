@@ -2,15 +2,18 @@ import pygame
 import requests
 import json
 import time
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 # Initialize Pygame and the joystick
 pygame.init()
 pygame.joystick.init()
-joystick = pygame.joystick.Joystick(1)
+joystick = pygame.joystick.Joystick(0)
 joystick.init()
 
 # Define the server URL
-server_url = "http://localhost:5000/input"
+server_url = os.environ.get("HOST_URL")
 
 # Define the time interval between updates in seconds
 update_interval = 0.2
