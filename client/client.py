@@ -17,7 +17,7 @@ joystick.init()
 server_url = os.environ.get("HOST_URL")
 
 # Define the time interval between updates in seconds
-update_interval = os.environ.get("UPDATE_INTERVAL")
+update_interval = float(os.environ.get("UPDATE_INTERVAL"))
 
 # Start the HTTP session
 session = requests.Session()
