@@ -3,6 +3,7 @@ import requests
 import json
 import time
 from dotenv import load_dotenv
+
 load_dotenv()
 import os
 
@@ -16,7 +17,7 @@ joystick.init()
 server_url = os.environ.get("HOST_URL")
 
 # Define the time interval between updates in seconds
-update_interval = 0.2
+update_interval = 0.02
 
 # Start the HTTP session
 session = requests.Session()
@@ -37,6 +38,11 @@ while True:
         axes.append(axis)
     joystick_stats["axes"] = axes
 
+    buttons = []
+    for i in range(joystick.get_numbuttons()):
+        button = joystick.get_button(i)
+        buttons.append(button)
+    joystick_stats["buttons"] = buttons
     # # Get the current joystick input values
     # x_axis = joystick.get_axis(0)
     # y_axis = joystick.get_axis(1)
@@ -51,7 +57,7 @@ while True:
     json_data = json.dumps(joystick_stats)
     print(json_data)
     # Send the input data as a POST request to the server
-    # response = session.post(server_url, data=json_data)
+    response = session.post(server_url, data=json_data)
 
     # Print the response from the server
-    # print(response.text)
+    print(response.text)
