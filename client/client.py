@@ -17,7 +17,7 @@ joystick.init()
 server_url = os.environ.get("HOST_URL")
 
 # Define the time interval between updates in seconds
-update_interval = 0.02
+update_interval = os.environ.get("UPDATE_INTERVAL")
 
 # Start the HTTP session
 session = requests.Session()
@@ -43,15 +43,14 @@ while True:
         button = joystick.get_button(i)
         buttons.append(button)
     joystick_stats["buttons"] = buttons
-    # # Get the current joystick input values
-    # x_axis = joystick.get_axis(0)
-    # y_axis = joystick.get_axis(1)
-    # buttons = [joystick.get_button(i) for i in range(joystick.get_numbuttons())]
 
-    # # Define the input data as a dictionary
-    # input_data = {
-    #     "events": [{"type": "joystick", "x": x_axis, "y": y_axis, "buttons": buttons}]
-    # }
+    hats = []
+    for i in range(joystick.get_numhats()):
+        hat = joystick.get_hat(i)
+        hats.append(hat)
+    joystick_stats["hats"] = hats
+
+    print(joystick_stats["hats"])
 
     # Convert the input data to JSON format
     json_data = json.dumps(joystick_stats)
