@@ -21,9 +21,6 @@ def joystick_to_vjoy(joystick_stats):
     x_right = data["axes"][2]
     y_right = data["axes"][3]
 
-    logger.info(int((x_left + 1) * JOYSTICK_RANGE),
-                int((y_left + 1) * JOYSTICK_RANGE))
-
     # Update virtual joystick axes
     vj.set_axis(pyvjoy.HID_USAGE_X, int((x_left + 1) * JOYSTICK_RANGE / 2))
     vj.set_axis(pyvjoy.HID_USAGE_Y, int((y_left + 1) * JOYSTICK_RANGE / 2))

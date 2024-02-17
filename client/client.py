@@ -10,21 +10,12 @@ load_dotenv()
 # Initialize Pygame and the joystick
 pygame.init()
 pygame.joystick.init()
-joystick = pygame.joystick.Joystick(0)
+joystick = pygame.joystick.Joystick(1)
 joystick.init()
-
-# Define the server URL
-server_url = os.environ.get("HOST_URL")
-
-# Define the time interval between updates in seconds
-update_interval = float(os.environ.get("UPDATE_INTERVAL"))
-
-# Continuously send joystick input to the server every 20 ms
 
 
 def joystick_data_message_producer(websocket):
     while True:
-        # time.sleep(update_interval)
         pygame.event.pump()
         joystick_stats = {}
 
@@ -59,7 +50,8 @@ def joystick_data_message_producer(websocket):
 
 
 def send_joystick_data():
-    with connect("ws://localhost:8765") as websocket:
+    HOST_URL = os.environ.get("HOST_URL")
+    with connect(HOST_URL) as websocket:
         joystick_data_message_producer(websocket)
 
 
